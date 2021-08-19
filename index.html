@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spartan:wght@100;700&display=swap" rel="stylesheet">
+  <title>Rita Doumet | Calculator app</title>
+
+  <style>
+    *{
+      font-weight: 700;
+      padding:0;
+      margin:0;
+      box-sizing: border-box;
+      font-family: 'Spartan';
+      transition: all 0.3s;
+    }
+    body{
+      background-color: hsl(222, 26%, 31%);
+    }
+    main{
+      width:390px;
+      margin: 100px auto 0 auto; 
+    }
+    section{
+      width: 100%;
+    }
+    #result{
+      color: white;
+      text-align: right;
+    }
+    #top{
+      display: flex;
+      font-size:17px;
+      color: white;
+      justify-content: space-between;
+    }
+    #theme{
+      position: relative;
+    }
+    #theme *{
+      display: inline-block;
+    }
+    #theme span{
+      display: inline-block;
+    }
+    #theme p{
+      font-size: 8px;
+      position: relative;
+     bottom: 4px;
+    }
+    #theme_toggle{
+      width: 40px;
+      height: 16px;
+      background-color: hsl(223, 31%, 20%);
+      border-radius: 7px;
+      display: inline-flex;
+      justify-content: flex-start;
+    }
+    #theme_toggle:hover{
+      background-color: hsl(224, 36%, 15%);
+      cursor: pointer;
+    }
+    #toggle_circle{
+      background-color: hsl(6, 63%, 50%);
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      margin: 3px;
+    }
+    #theme_toggle::after{
+      content: '1 2 3';
+      letter-spacing: 2.5px;
+      font-size:8px;
+      width: 40px;
+      width: max-content;
+      position: absolute;
+      bottom: 20px;
+      right:2px;
+    }
+    #screen{
+      height:80px;
+      padding:6%;
+      background-color: hsl(224, 36%, 15%);
+    }
+    #screen, #keypad{
+      width: 100%;
+      margin-top: 10px;
+      border-radius:5px;
+      font-size: 32px;
+    }
+    #keypad{
+      display: grid;
+      padding: 14px;
+      grid-gap:14px;
+      background-color: hsl(223, 31%, 20%);
+      grid-template-columns: auto auto auto auto;
+      grid-template-rows: auto auto auto auto auto;
+    }
+    #keypad button:nth-of-type(4), #keypad button:nth-of-type(17){
+      background-color: hsl(225, 21%, 49%);
+      box-shadow: 0 3px hsl(224, 28%, 35%);
+      color:white;
+    }
+    #keypad button:nth-of-type(18){
+      background-color: hsl(6, 63%, 50%);
+      box-shadow: 0 3px hsl(6, 70%, 34%);
+      color:white;
+    }
+    #keypad button:nth-of-type(17){
+      grid-column-start: 1;
+      grid-column-end: 3;
+      width: 100%;
+    }
+    #keypad button:nth-of-type(18){
+      grid-column-start: 3;
+      grid-column-end: 5;
+      width: 100%;
+    }
+    #keypad button{
+      background-color: hsl(30, 25%, 89%);
+      color:hsl(223, 31%, 20%);
+      border:none;
+      cursor: pointer;
+      border-radius: 5px;
+      box-shadow: 0 3px  hsl(28, 16%, 65%);
+      width:80px;
+      height:40px;
+    }
+    #keypad *:hover{
+      filter:brightness(80%);
+    }
+    .attribution { font-size: 11px; text-align: center; font-weight: 100;}
+    .attribution a { color: hsl(228, 45%, 44%); }
+    @media  screen and (max-width: 600px) {
+      main{
+        width: 85%;
+      }
+      #keypad button{
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section id="top">
+      <p>calc</p>
+      <div id="theme">
+        <p>THEME</p>
+        <div id="theme_toggle"><span id="toggle_circle"></div>
+      </div>
+    </section>
+    <section id="screen">
+      <p id="result"></p>
+    </section>
+    <section id="keypad">
+      <button type="button" class="calc" value="7">7</button>
+      <button type="button" class="calc" value="8">8</button>
+      <button type="button" class="calc" value="9">9</button>
+      <button type="button" id="del">DEL</button>
+      <button type="button" class="calc"  value="4">4</button>
+      <button type="button" class="calc" value="5">5</button>
+      <button type="button" class="calc" value="6">6</button>
+      <button type="button" class="calc" value="+">+</button>
+      <button type="button" class="calc" value="1">1</button>
+      <button type="button" class="calc" value="2">2</button>
+      <button type="button" class="calc" value="3">3</button>
+      <button type="button" class="calc" value="-">-</button>
+      <button type="button" class="calc" value=".">.</button>
+      <button type="button" class="calc" value="0">0</button>
+      <button type="button" class="calc" value="/">/</button>
+      <button type="button" class="calc" value="*">x</button>
+      <button type="reset" id="reset">RESET</button>
+      <button type="button" id="eval">=</button>
+    </section>
+  </main>
+
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Rita Doumet</a>.
+  </div>
+  <script>
+    let theme=1;
+    let expr = '';
+    let topSection = document.getElementById("top");
+    let calcButtons=document.getElementsByClassName("calc");
+    let delButton = document.getElementById("del");
+    let evalButton = document.getElementById("eval");
+    let allButtons = document.getElementsByTagName("button");
+    let screenRes=document.getElementById("result");
+    let resetButton=document.getElementById("reset");
+    let themeToggle=document.getElementById("theme_toggle");
+    let screenn = document.getElementById("screen");
+    let keypad = document.getElementById("keypad");
+    
+    for (let i = 0; i<calcButtons.length; i++){
+      calcButtons[i].addEventListener("click", function(){addToExpr(calcButtons[i].value)});
+    }
+    themeToggle.addEventListener("click", function(){changeThemes()});
+    delButton.addEventListener("click",function(){deleteFromExp()});
+    evalButton.addEventListener("click",function(){evalExpr()});
+    resetButton.addEventListener("click", function(){resetExpr()});
+    function addToExpr(i){
+      expr+=i;
+      screenRes.innerHTML=expr;
+    }
+    function deleteFromExp(){
+      expr=expr.slice(0,-1);
+      console.log(expr);
+      screenRes.innerHTML=expr;
+    }
+    function evalExpr(){
+      try{
+        let res = eval(expr);
+        screenRes.innerHTML=res;
+        expr=(res=="Infinity")?'':res;
+      }
+      catch{
+        expr='';
+        screenRes.innerHTML="Invalid Input";
+      }
+      
+    }
+    function resetExpr(){
+      screenRes.innerHTML='';
+      expr='';
+    }
+    function changeThemes(){
+      theme=(theme==3)?1:theme+1;
+      if (theme==1){
+        theme1();
+      }
+      else if(theme==2){
+        theme2();
+      }
+      else{
+        theme3();
+      }
+    }
+    function theme1(){
+        themeToggle.style.justifyContent="flex-start";
+        document.body.style.backgroundColor=" hsl(222, 26%, 31%)";
+        keypad.style.backgroundColor="hsl(223, 31%, 20%)";
+        themeToggle.style.backgroundColor="hsl(223, 31%, 20%)";
+        screenn.style.backgroundColor=" hsl(224, 36%, 15%)";
+        delButton.style.backgroundColor=" hsl(225, 21%, 49%)";
+        resetButton.style.backgroundColor=" hsl(225, 21%, 49%)";
+        delButton.style.boxShadow="0 3px hsl(224, 28%, 35%)";
+        resetButton.style.boxShadow="0 3px hsl(224, 28%, 35%)";
+        evalButton.style.backgroundColor="hsl(6, 63%, 50%)";
+        themeToggle.firstChild.style.backgroundColor="hsl(6, 63%, 50%)";
+        evalButton.style.boxShadow="0 3px hsl(6, 70%, 34%)";
+        for (let i = 0; i<calcButtons.length; i++){
+          calcButtons[i].style.backgroundColor="hsl(30, 25%, 89%)";
+          calcButtons[i].style.boxShadow="0 3px hsl(28, 16%, 65%)";
+          calcButtons[i].style.color="hsl(223, 31%, 20%)";
+        }
+        document.body.style.color="hsl(221, 14%, 31%)";
+        document.getElementById("result").style.color="white";
+        topSection.style.color="white";
+        delButton.style.color="hsl(0, 0, 100%)";
+        resetButton.style.color="hsl(0, 0, 100%)";
+        evalButton.style.color="hsl(0, 0, 100%)";
+    }
+    function theme2(){
+        themeToggle.style.justifyContent="center";
+        document.body.style.backgroundColor=" hsl(0, 0%, 90%)";
+        keypad.style.backgroundColor="hsl(0, 5%, 81%)";
+        themeToggle.style.backgroundColor="hsl(0, 5%, 81%)";
+        screenn.style.backgroundColor=" hsl(0, 0%, 93%)";
+        delButton.style.backgroundColor=" hsl(185, 42%, 37%)";
+        resetButton.style.backgroundColor=" hsl(185, 42%, 37%)";
+        delButton.style.boxShadow="0 3px hsl(185, 58%, 25%)";
+        resetButton.style.boxShadow="0 3px hsl(185, 58%, 25%)";
+        evalButton.style.backgroundColor="hsl(25, 98%, 40%)";
+        themeToggle.firstChild.style.backgroundColor="hsl(25, 98%, 40%)";
+        evalButton.style.boxShadow="0 3px hsl(25, 99%, 27%)";
+        for (let i = 0; i<calcButtons.length; i++){
+          calcButtons[i].style.backgroundColor="hsl(45, 7%, 89%)";
+          calcButtons[i].style.boxShadow="0 3px hsl(35, 11%, 61%)";
+          calcButtons[i].style.color="rgb(53, 53, 44)";
+        }
+        document.body.style.color="hsl(60, 10%, 19%)";
+        document.getElementById("result").style.color="hsl(60, 10%, 19%)";
+        topSection.style.color="hsl(60, 10%, 19%)";
+        delButton.style.color="hsl(0, 0, 100%)";
+        resetButton.style.color="hsl(0, 0, 100%)";
+        evalButton.style.color="hsl(0, 0, 100%)";
+      }
+    function theme3(){
+        themeToggle.style.justifyContent="flex-end";
+        document.body.style.backgroundColor=" hsl(268, 75%, 9%)";
+        keypad.style.backgroundColor="hsl(268, 71%, 12%)";
+        themeToggle.style.backgroundColor="hsl(268, 71%, 12%)";
+        screenn.style.backgroundColor=" hsl(281, 89%, 26%)";
+        delButton.style.backgroundColor=" hsl(281, 89%, 26%)";
+        resetButton.style.backgroundColor=" hsl(281, 89%, 26%)";
+        delButton.style.boxShadow="0 3px hsl(285, 91%, 52%)";
+        resetButton.style.boxShadow="0 3px hsl(285, 91%, 52%)";
+        evalButton.style.backgroundColor="hsl(176, 100%, 44%)";
+        themeToggle.firstChild.style.backgroundColor="hsl(176, 100%, 44%)";
+        evalButton.style.boxShadow="0 3px hsl(177, 92%, 70%)";
+        for (let i = 0; i<calcButtons.length; i++){
+          calcButtons[i].style.backgroundColor="hsl(268, 47%, 21%)";
+          calcButtons[i].style.boxShadow="0 3px hsl(290, 70%, 36%)";
+          calcButtons[i].style.color="rgb(255, 229, 61)";
+        }
+        document.body.style.color="hsl(52, 100%, 62%)";
+        document.getElementById("result").style.color="hsl(52, 100%, 62%)";
+        topSection.style.color="hsl(52, 100%, 62%)";
+        delButton.style.color="white";
+        resetButton.style.color="white";
+        evalButton.style.color="hsl(198, 20%, 13%)";
+    }
+  </script>
+</body>
+</html>
